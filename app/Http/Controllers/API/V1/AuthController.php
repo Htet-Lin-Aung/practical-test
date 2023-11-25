@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Exceptions\ApiExceptionHandler;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\V1\RegisterRequest;
@@ -22,8 +23,6 @@ class AuthController extends Controller
     {   
         try {
             $request['password'] = bcrypt($request->password);
-
-            unset($request['confirm_password']);
             
             $user = User::create($request->all());
             
@@ -36,10 +35,8 @@ class AuthController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message' => 'An error occurs while creating a user.',
-            ]);
+            
+            throw new ApiExceptionHandler('An error occurs while creating a user.');
         }
     }
    
@@ -65,10 +62,8 @@ class AuthController extends Controller
                 'access_token' => $token
             ]);
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message' => 'An error occurred during login.',
-            ]);
+
+            throw new ApiExceptionHandler('An error occurs while loggin in.'); 
         }
     }
 
@@ -91,6 +86,8 @@ class AuthController extends Controller
                 'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
                 'message' => 'An error occurred while logging out.',
             ]);
+
+            throw new ApiExceptionHandler('An error occurred while logging out.'); 
         }
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\ApiExceptionHandler;
 use App\Models\Form;
 use App\Models\Field;
 use Illuminate\Http\Response;
@@ -41,11 +42,7 @@ class DynamicForm implements DynamicFormInterface
             // Rollback the transaction if an exception occurs
             DB::rollBack();
 
-            // Handle the exception, for example, you can return a response with an error message
-            return response()->json([
-                'status' => Response::HTTP_NOT_FOUND,
-                'error' => 'One or more field_id does not exist.'
-            ]);
+            throw new ApiExceptionHandler('One or more field_id does not exist.');
         }
     }
 }

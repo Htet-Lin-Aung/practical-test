@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use Illuminate\Http\Response;
+use App\Exceptions\ApiExceptionHandler;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\DynamicFormRequest;
 use App\Services\Interfaces\DynamicFormInterface;
@@ -24,10 +24,7 @@ class DynamicFormController extends Controller
             return response()->json($response);
         } catch (\Exception $e) {
             
-            return response()->json([
-                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message' => 'An error occurred while creating a form.',
-            ]);
+            throw new ApiExceptionHandler('An error occurs while creating the data');
         }
     }
 }

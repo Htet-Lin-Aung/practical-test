@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\SurveyCreated;
-use App\Exceptions\WebExceptionHandler;
-use Illuminate\Http\Request;
 use App\Models\Form;
 use App\Models\User;
+use App\Events\SurveyCreated;
+use Illuminate\Support\Facades\DB;
+use App\Exceptions\WebExceptionHandler;
 use App\Http\Requests\V1\SurveyRequest;
-use App\Listeners\SendSurveyCreatedNotifications;
 
 class SurveyController extends Controller
 {
@@ -36,6 +35,8 @@ class SurveyController extends Controller
     public function store(SurveyRequest $request, Form $form)
     {        
         try{
+            DB::beginTransaction();
+
             $user = User::create([
                 'name' => 'Survey User',
                 'email' => $request->email,
@@ -51,43 +52,15 @@ class SurveyController extends Controller
 
             $form->surveys()->createMany($data);
 
+            DB::commit();
+
             event(new SurveyCreated($user));
         
             return redirect()->route('home')->with('Thank you for your answer.');
         } catch (\Exception $e) {
+            DB::rollback();
+
             throw new WebExceptionHandler($e->getMessage());  
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Exceptions\ApiExceptionHandler;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\DynamicFieldRequest;
@@ -24,10 +25,8 @@ class DynamicFieldController extends Controller
             return response()->json($response);
 
         } catch (\Exception $e){
-            return response()->json([
-                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message' => 'An error occurred while fetching the list.',
-            ]);
+            
+            throw new ApiExceptionHandler('An error occurs while fetching the data');
         }
     }
 
@@ -40,10 +39,7 @@ class DynamicFieldController extends Controller
 
         } catch (\Exception $e) {
             
-            return response()->json([
-                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message' => 'An error occurred while creating a field.',
-            ]);
+            throw new ApiExceptionHandler('An error occurs while creating the data');
         }
     }
 }

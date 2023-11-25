@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\ApiExceptionHandler;
 use App\Models\Field;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -35,10 +36,7 @@ class DynamicField implements DynamicFieldInterface
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return response()->json([
-                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message' => 'Error creating field.'
-            ]);
+            throw new ApiExceptionHandler('An error occurs while creating the data');
         }
     }
 }
