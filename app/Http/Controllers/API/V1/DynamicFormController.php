@@ -21,13 +21,9 @@ class DynamicFormController extends Controller
         try {
             $response = $this->formService->createForm($request);
 
-            return response()->json([
-                'status' => Response::HTTP_CREATED,
-                'message' => 'Dynamic form is successfully created.',
-                'data' => $response
-            ]);
-
+            return response()->json($response);
         } catch (\Exception $e) {
+            
             return response()->json([
                 'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
                 'message' => 'An error occurred while creating a survey.',

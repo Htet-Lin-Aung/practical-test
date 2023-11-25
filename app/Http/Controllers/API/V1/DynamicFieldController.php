@@ -21,10 +21,7 @@ class DynamicFieldController extends Controller
         try{
             $response = $this->fieldService->fieldList();
 
-            return response()->json([
-                'status' => Response::HTTP_OK,
-                'data' => $response
-            ]);
+            return response()->json($response);
 
         } catch (\Exception $e){
             return response()->json([
@@ -39,13 +36,10 @@ class DynamicFieldController extends Controller
         try {
             $response = $this->fieldService->createField($request);
 
-            return response()->json([
-                'status' => Response::HTTP_CREATED,
-                'message' => 'Dynamic form is successfully created.',
-                'data' => $response
-            ]);
+            return $response;
 
         } catch (\Exception $e) {
+            
             return response()->json([
                 'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
                 'message' => 'An error occurred while creating a survey.',
