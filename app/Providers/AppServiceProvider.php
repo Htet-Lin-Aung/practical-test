@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Services\DynamicForm;
+use App\Services\DynamicField;
 use Illuminate\Support\ServiceProvider;
+use App\Services\Interfaces\DynamicFormInterface;
+use App\Services\Interfaces\DynamicFieldInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->app->bind(DynamicFormInterface::class, DynamicForm::class);
+        $this->app->bind(DynamicFieldInterface::class, DynamicField::class);
     }
 }

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\V1\AuthController;
-// use App\Http\Controllers\API\V1\SurveyController;
+use App\Http\Controllers\API\V1\{ DynamicFormController, DynamicFieldController};
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +19,8 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    // Route::resource('surveys',SurveyController::class);
+    Route::get('/dynamic-field/list',[DynamicFieldController::class,'fieldList']);
+    Route::post('/dynamic-field/create',[DynamicFieldController::class,'createField']);
+    Route::post('/dynamic-form/create',[DynamicFormController::class,'createForm']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
