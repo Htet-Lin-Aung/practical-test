@@ -17,7 +17,8 @@ class DynamicFormResource extends JsonResource
     {
         return [
             'id'          => $this->id,
-            'title'       => $this->title,
+            'name'        => $this->name,
+            'description' => $this->description,
             'fields'      => DynamicFieldResource::collection($this->fields)
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Form;
+use App\Models\Field;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\DynamicFormResource;
@@ -21,7 +22,7 @@ class DynamicForm implements DynamicFormInterface
 
             // Check if each field_id exists before attaching
             foreach ($request->field_id as $fieldId) {
-                $createdForm->fields()->findOrFail($fieldId);
+                Field::findOrFail($fieldId);
             }
 
             $createdForm->fields()->attach($request->field_id);

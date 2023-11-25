@@ -4,7 +4,7 @@ namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DynamicFormRequest extends FormRequest
+class SurveyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,10 +21,23 @@ class DynamicFormRequest extends FormRequest
      */
     public function rules(): array
     {
+        $fields = $this->form->fields()->pluck('code');
+        
+        $validationRules = [];
+
+        $validationRules['email'] = ['required', 'unique:users,email', 'email'];
+
+        foreach ($fields as $field) {
+            $validationRules[$field] = 'required'; 
+        }
+
+        return $validationRules;
+    }
+
+    public function messages(): array
+    {
         return [
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'field_id' => 'required|array'
+            'email.unique' => 'The survey has already been answered with this email.'
         ];
     }
 }

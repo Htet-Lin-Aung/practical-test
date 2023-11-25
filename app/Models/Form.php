@@ -9,11 +9,16 @@ class Form extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name','status'
+        'name','description','status'
     ];
 
     public function fields()
     {
         return $this->belongsToMany(Field::class,'form_field');
+    }
+
+    public function surveys()
+    {
+        return $this->hasmany(Survey::class);
     }
 }
