@@ -42,7 +42,7 @@ class DynamicFieldController extends Controller
             
             return response()->json([
                 'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message' => 'An error occurred while creating a survey.',
+                'message' => 'An error occurred while creating a field.',
             ]);
         }
     }
