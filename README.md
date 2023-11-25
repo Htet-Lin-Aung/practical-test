@@ -1,6 +1,6 @@
-# Your Project Name
+# Laravel Practical Test
 
-A brief description of your project.
+This is a dynamic syrvey form project.
 
 ## Table of Contents
 
@@ -33,22 +33,16 @@ A brief description of your project.
    ```bash
    git clone https://github.com/Htet-Lin-Aung/practical-test.git
 
-   ```bash
    cd practical-test
 
-   ```bash
    composer install
 
-   ```bash
    cp .env.example .env
 
-   ```bash
    php artisan key:generate
     
-   ```bash
    php artisan migrate --seed
    
-   ```bash
    php artisan serve
 
 
